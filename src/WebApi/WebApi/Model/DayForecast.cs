@@ -1,15 +1,17 @@
-﻿namespace WebApi.Model
+﻿using System;
+using System.Collections.Generic;
+
+namespace WebApi.Model
 {
     public class DayForecast
     {
-        public DayForecast(decimal humidity, int temperature, decimal windSpeed)
+        public DayForecast(DateTime day, IEnumerable<TimeForecast> times)
         {
-            Humidity = humidity;
-            Temperature = temperature;
-            WindSpeed = windSpeed;
+            Day = day;
+            Times = times;
         }
-        public decimal Humidity { get; private set; }
-        public int Temperature { get; private set; }
-        public decimal WindSpeed { get; private set; }
+
+        public DateTime Day { get; }
+        public IEnumerable<TimeForecast> Times { get; }
     }
 }

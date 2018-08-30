@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Model;
+using WebApi.Services.Forecast;
 
 namespace WebApi.Controllers
 {
@@ -8,10 +9,21 @@ namespace WebApi.Controllers
     [ApiController]
     public class WeatherController : ControllerBase
     {
-        [HttpGet("forecast")]
-        public ActionResult<IEnumerable<DayForecast>> Forecast(string city)
+        private readonly ForecastSearchHandler _forecastSearchHandler;
+
+        public WeatherController(ForecastSearchHandler forecastSearchHandler)
         {
-            return new[] {new DayForecast(5, 5, 5), new DayForecast(1, 2, 4)};
+            _forecastSearchHandler = forecastSearchHandler;
+        }
+
+        [HttpGet("forecast")]
+        public async Task<ActionResult<ForecastResponse>> Forecast(string city)
+        {
+            var returnValue = await _forecastSearchHandler.ForecastResponse(new ForeCastRequest
+            {
+                City = city
+            });
+            return returnValue;
         }
     }
 }
