@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApi.Model
+namespace WebApi.Model.Forecast
 {
     public class ForecastResponse
     {

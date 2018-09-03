@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Model;
+using WebApi.Model.Forecast;
 using WebApi.Services.Forecast;
+using WebApi.Services.History;
 
 namespace WebApi
 {
@@ -31,11 +35,11 @@ namespace WebApi
         {
             services.AddOptions();
             services.Configure<OpenWeatherSettings>(Configuration.GetSection("OpenWeather"));
-
+            services.AddMediatR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IForeCastRequester, ForeCastRequesterGeneral>();
-            services.AddTransient<ForecastSearchHandler>();
             services.AddCors();
+            services.AddDbContext<HistoryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using WebApi.Model;
+using WebApi.Model.Forecast;
 
 namespace WebApi.Services.Forecast
 {

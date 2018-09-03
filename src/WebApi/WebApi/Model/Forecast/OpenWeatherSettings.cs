@@ -1,4 +1,4 @@
-﻿namespace WebApi.Model
+﻿namespace WebApi.Model.Forecast
 {
     public class OpenWeatherSettings
     {

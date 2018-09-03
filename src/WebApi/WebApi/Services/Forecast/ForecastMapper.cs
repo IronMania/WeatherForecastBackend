@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebApi.Model;
+using WebApi.Model.Forecast;
 using WebApi.Services.Forecast.OpenWeatherDto;
 
 namespace WebApi.Services.Forecast

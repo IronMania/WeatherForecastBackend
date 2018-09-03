@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebApi.Model
+namespace WebApi.Model.Forecast
 {
     public class TimeForecast
     {
