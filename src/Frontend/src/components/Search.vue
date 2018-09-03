@@ -1,7 +1,10 @@
 <template>
   <div id="Search">
     Search:
-    <input v-model="city"  placeholder="City or Postal Code in Germany">
+    <input v-model="city" type="text"  placeholder="City or Postal Code in Germany">
+    <ul v-if="searchResults.length > 0">
+            <li v-for="result in searchResults" :key="result.id" v-text="result"></li>
+    </ul>
     <button v-on:click="SearchWeather(city)" >Search</button>
     <br/>
     <forecast-day 
@@ -25,6 +28,7 @@ export default {
     return{
       city : '',
       request: '',
+      searchResults: [],
       SearchWeather: function (city) {
       // `this` inside methods points to the Vue instance
       axios
@@ -33,8 +37,18 @@ export default {
       //https://localhost:44319/api/weather/forecast?city=blubb
     }
     }
-  }
-  
+  },
+  watch: {
+      city() {
+        this.fetch();
+      }
+  },
+  methods: {
+    fetch() {
+        axios.get('https://localhost:44319/api/weather/history', { params: { city: this.city } })
+            .then(response => this.searchResults = response.data.searchResults);
+      }
+    }
 }
 
 </script>
