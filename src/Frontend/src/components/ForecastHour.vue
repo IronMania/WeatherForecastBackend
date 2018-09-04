@@ -1,17 +1,28 @@
 <template>
-  <div class="hello">
-   Hour:  {{ item.time | moment("hA")}}   <br/>
-    Windspeed: {{item.windSpeed }}   <br/>
-    Temperature:{{ item.temperature}}<br/>       
-    Humidity: {{item.humidity}}   <br/>
+  <div>
+        <b-card v-bind:title="item.time | convertHour">
+        Windspeed: {{item.windSpeed }} meter/sec  <br/>
+        Temperature:{{ item.temperature}} &deg;Celsius<br/>       
+        Humidity: {{item.humidity}} %  <br/>    
+    </b-card>
+   
+    
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'ForecastHour',
   props: {
     item: Object
+  },
+      filters: {
+  convertHour: function (value) {
+    if (!value) return ''
+    return moment(value).format("hA");
+  }
   }
 }
 </script>

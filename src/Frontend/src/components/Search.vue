@@ -1,54 +1,86 @@
 <template>
-  <div id="Search">
-    Search:
-    <input v-model="city" type="text"  placeholder="City or Postal Code in Germany">
-    <ul v-if="searchResults.length > 0">
-            <li v-for="result in searchResults" :key="result.id" v-text="result"></li>
-    </ul>
-    <button v-on:click="SearchWeather(city)" >Search</button>
-    <br/>
-    <forecast-day 
-      v-for="(item,index) in request.forecastsPerDay"
-      v-bind:item="item"
-      v-bind:index="index"
-      v-bind:key="item.id"
-     ></forecast-day>
+  <div id="Search" class="container">
+    <div class="alert alert-danger row" role="alert" v-if="showError">The search '{{city}}' term could not be found. Put in a city or postal code from Germany</div>
+    <div class="row">
+      <suggestions
+      v-model="city"
+      :options="searchResults"
+      :onInputChange="searchHistory"
+      :onItemSelected="searchWeather"
+      class="col col-8"
+      >
+      </suggestions>
+      <button v-on:click="searchWeather(city)" class="col col-4" >Search</button>
+    </div>
+    <b-tabs>
+    <b-tab 
+      v-for="(item) in request.forecastsPerDay"
+      v-bind:key="item.id" 
+      v-bind:title="item | convertDay"
+      >
+           <forecast-day :item="item"></forecast-day>
+    </b-tab>
+    </b-tabs>
+
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import ForecastDay from './ForecastDay.vue'
+import moment from 'moment'
+import Suggestions from 'v-suggestions'
+import 'v-suggestions/dist/v-suggestions.css'
+
 export default {
   name: 'Search',
     components: {
-    ForecastDay
+    ForecastDay,
+    Suggestions 
   },
   data(){
     return{
       city : '',
       request: '',
-      searchResults: [],
-      SearchWeather: function (city) {
-      // `this` inside methods points to the Vue instance
-      axios
-        .get('https://localhost:44319/api/weather/forecast?city='+city)
-        .then(response => (this.request = response.data))
-      //https://localhost:44319/api/weather/forecast?city=blubb
+      searchResults: {
+        placeholder: 'city or postal code in Germany',
+        inputClass: 'col col-12'
+      },
+      showError: false
     }
-    }
-  },
-  watch: {
-      city() {
-        this.fetch();
-      }
   },
   methods: {
-    fetch() {
-        axios.get('https://localhost:44319/api/weather/history', { params: { city: this.city } })
-            .then(response => this.searchResults = response.data.searchResults);
+    searchHistory(city) {
+      if (city.trim().length === 0) {
+        return null
       }
-    }
+      return new Promise(resolve => {
+        axios.get('https://localhost:44319/api/weather/history?city=' + city).then(response => {
+          const items = []
+          response.data.searchResults.forEach((item) => {
+              items.push(item)
+          })
+          resolve(items)
+        })
+      })
+      },
+    searchWeather(city){
+      this.city = city;
+      this.showError = false;
+      axios
+        .get('https://localhost:44319/api/weather/forecast?city='+ this.city)
+        .then(response => (this.request = response.data),() =>
+          this.showError = true
+        )
+      }
+
+    },
+    filters: {
+  convertDay: function (value) {
+    if (!value) return ''
+    return moment(value.day).format("DD.MM.YYYY");
+  }
+}
 }
 
 </script>

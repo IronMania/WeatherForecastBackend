@@ -2,6 +2,29 @@
 
 TestApp für AppsFactory
 
+## Requirements
+- Node.js
+- .NET Core 2.1
+
+## Development
+
+### Configuration
+
+please configure the Backend url //TODO. make backend url configurable
+
+### Run frontend
+``` 
+cd src/Frontend 
+npm run serve    
+```
+
+### Run backend
+```
+cd src/WebApi/WebApi
+dotnet run
+```
+
+## Task
 Your task, should you choose to accept it, is to create a small web frontend. On a simple ASP.NET Core website you should display a forecast of the next 5 days and the current weather data for any location. The desired location must be able to be changed by the user via an input mask either by means of postal code or place name. It is sufficient if only cities of the Federal Republic of Germany can be queried. Use metric information for illustration.
 There are tons of methods on OpenWeathermap, please concentrate on the following scenario: 
 

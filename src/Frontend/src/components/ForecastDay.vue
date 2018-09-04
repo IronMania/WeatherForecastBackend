@@ -1,6 +1,5 @@
 <template>
-  <div class="hello">
-   Forecast for {{ item.day | moment("dddd, MMMM Do YYYY")}}
+  <div>
    <forecast-hour v-bind:item="hour" v-bind:key="hour.id" v-for="(hour) in item.times"></forecast-hour>
    <br/>
   </div>
