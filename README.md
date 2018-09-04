@@ -10,7 +10,16 @@ TestApp für AppsFactory
 
 ### Configuration
 
-please configure the Backend url //TODO. make backend url configurable
+please configure the Backend url in `/src/Frontend/.env`
+
+for the WebApi the OpenWeather apikey must be set in the secrets of the webproject `secret.json`:
+```   
+{
+  "OpenWeather" : {
+    "ApiKey": "secretKey"
+  } 
+}
+```
 
 ### Run frontend
 ``` 
@@ -21,6 +30,7 @@ npm run serve
 ### Run backend
 ```
 cd src/WebApi/WebApi
+dotnet ef database update
 dotnet run
 ```
 

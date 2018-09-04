@@ -55,12 +55,14 @@ export default {
         return null
       }
       return new Promise(resolve => {
-        axios.get('https://localhost:44319/api/weather/history?city=' + city).then(response => {
-          const items = []
-          response.data.searchResults.forEach((item) => {
-              items.push(item)
-          })
-          resolve(items)
+        axios
+          .get( process.env.VUE_APP_BACKEND_URL + 'weather/history', { params: {city: city}})
+          .then(response => {
+            const items = []
+            response.data.searchResults.forEach((item) => {
+                items.push(item)
+            })
+            resolve(items)
         })
       })
       },
@@ -68,7 +70,7 @@ export default {
       this.city = city;
       this.showError = false;
       axios
-        .get('https://localhost:44319/api/weather/forecast?city='+ this.city)
+        .get(process.env.VUE_APP_BACKEND_URL + 'weather/forecast', { params: {city: city}})
         .then(response => (this.request = response.data),() =>
           this.showError = true
         )
