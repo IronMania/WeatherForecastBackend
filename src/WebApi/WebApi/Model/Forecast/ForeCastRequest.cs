@@ -2,7 +2,7 @@
 
 namespace WebApi.Model.Forecast
 {
-    public class ForeCastRequest :IRequest<ForecastResponse>
+    public class ForeCastRequest : IRequest<ForecastResponse>
     {
         public string City { get; set; }
     }

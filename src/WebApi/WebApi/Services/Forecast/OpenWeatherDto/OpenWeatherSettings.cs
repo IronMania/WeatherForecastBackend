@@ -1,4 +1,4 @@
-﻿namespace WebApi.Model.Forecast
+﻿namespace WebApi.Services.Forecast.OpenWeatherDto
 {
     public class OpenWeatherSettings
     {

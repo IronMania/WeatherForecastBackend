@@ -1,11 +1,9 @@
-﻿using System.Collections;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Model;
 using WebApi.Model.Forecast;
 using WebApi.Model.History;
-using WebApi.Services.Forecast;
 
 namespace WebApi.Controllers
 {
@@ -23,11 +21,18 @@ namespace WebApi.Controllers
         [HttpGet("forecast")]
         public async Task<ActionResult<ForecastResponse>> Forecast(string city)
         {
-            var returnValue = await _mediator.Send(new ForeCastRequest
+            try
             {
-                City = city
-            });
-            return returnValue;
+                var returnValue = await _mediator.Send(new ForeCastRequest
+                {
+                    City = city
+                });
+                return returnValue;
+            }
+            catch (HttpRequestException)
+            {
+                return NotFound($"Specify a valid city or postal code in Germany. '{city}' is not valid!");
+            }
         }
 
         [HttpGet("history")]

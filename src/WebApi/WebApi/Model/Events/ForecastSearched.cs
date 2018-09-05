@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace WebApi.Model.Forecast
+namespace WebApi.Model.Events
 {
     public class ForecastSearched : INotification
     {
@@ -8,6 +8,7 @@ namespace WebApi.Model.Forecast
         {
             City = city;
         }
-        public string City { get; private set; }
+
+        public string City { get; }
     }
 }

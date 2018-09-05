@@ -8,6 +8,7 @@ namespace WebApi.Model.History
         {
             City = city;
         }
-        public string City { get; private set; }
+
+        public string City { get; }
     }
 }

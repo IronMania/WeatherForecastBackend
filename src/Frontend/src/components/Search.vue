@@ -1,6 +1,6 @@
 <template>
   <div id="Search" class="container">
-    <div class="alert alert-danger row" role="alert" v-if="showError">The search '{{city}}' term could not be found. Put in a city or postal code from Germany</div>
+    <div class="alert alert-danger row" role="alert" v-if="showError">{{errorMessage}}</div>
     <div class="row">
       <suggestions
       v-model="city"
@@ -42,6 +42,7 @@ export default {
     return{
       city : '',
       request: '',
+      errorMessage: '',
       searchResults: {
         placeholder: 'city or postal code in Germany',
         inputClass: 'col col-12'
@@ -71,8 +72,13 @@ export default {
       this.showError = false;
       axios
         .get(process.env.VUE_APP_BACKEND_URL + 'weather/forecast', { params: {city: city}})
-        .then(response => (this.request = response.data),() =>
-          this.showError = true
+        .then(response => {
+            this.request = response.data
+          },(error) =>{
+            this.showError = true;
+            this.errorMessage = error.response.data;
+        }
+          
         )
       }
 

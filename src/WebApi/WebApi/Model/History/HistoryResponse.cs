@@ -8,6 +8,7 @@ namespace WebApi.Model.History
         {
             SearchResults = searchResults;
         }
-        public IList<string> SearchResults { get; private set; }
+
+        public IList<string> SearchResults { get; }
     }
 }

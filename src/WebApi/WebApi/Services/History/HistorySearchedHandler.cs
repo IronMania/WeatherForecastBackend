@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using WebApi.Model.Forecast;
+using WebApi.Model.Events;
 
 namespace WebApi.Services.History
 {

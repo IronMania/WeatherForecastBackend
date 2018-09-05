@@ -1,15 +1,15 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using WebApi.Model;
+using WebApi.Model.Events;
 using WebApi.Model.Forecast;
 
 namespace WebApi.Services.Forecast
 {
-    public class ForecastSearchHandler : IRequestHandler<ForeCastRequest,ForecastResponse>
+    public class ForecastSearchHandler : IRequestHandler<ForeCastRequest, ForecastResponse>
     {
-        private readonly IForeCastRequester _requester;
         private readonly IMediator _mediator;
+        private readonly IForeCastRequester _requester;
 
         public ForecastSearchHandler(IForeCastRequester requester, IMediator mediator)
         {

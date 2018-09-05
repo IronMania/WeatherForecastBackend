@@ -23,7 +23,8 @@ for the WebApi the OpenWeather apikey must be set in the secrets of the webproje
 
 ### Run frontend
 ``` 
-cd src/Frontend 
+cd src/Frontend
+npm install 
 npm run serve    
 ```
 

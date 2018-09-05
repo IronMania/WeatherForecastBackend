@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebApi.Model;
-using WebApi.Model.Forecast;
 using WebApi.Services.Forecast;
+using WebApi.Services.Forecast.OpenWeatherDto;
 using WebApi.Services.History;
 
 namespace WebApi
@@ -39,7 +38,8 @@ namespace WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IForeCastRequester, ForeCastRequesterGeneral>();
             services.AddCors();
-            services.AddDbContext<HistoryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
+            services.AddDbContext<HistoryContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
