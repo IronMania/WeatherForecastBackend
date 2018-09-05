@@ -9,7 +9,7 @@
         }
 
         public int Id { get; protected set; }
-        public string SearchName { get; }
+        public string SearchName { get; private set; }
         public int SearchCount { get; private set; }
 
         public void ItemSearched()
