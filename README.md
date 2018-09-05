@@ -12,7 +12,7 @@ TestApp für AppsFactory
 
 please configure the Backend url in `/src/Frontend/.env`
 
-for the WebApi the OpenWeather apikey must be set in the secrets of the webproject `secret.json`:
+for the WebApi the OpenWeather apikey must be set in the secrets of the webproject `secret.json` or in the `appsettings.json`:
 ```   
 {
   "OpenWeather" : {

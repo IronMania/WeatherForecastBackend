@@ -29,9 +29,11 @@ namespace WebApi.Controllers
                 });
                 return returnValue;
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException exception)
             {
-                return NotFound($"Specify a valid city or postal code in Germany. '{city}' is not valid!");
+                if (exception.Message.Contains("401"))
+                    return NotFound($"Specify a valid city or postal code in Germany. '{city}' is not valid!");
+                throw;
             }
         }
 
